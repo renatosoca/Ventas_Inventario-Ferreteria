@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptArticulosBarras" language="groovy" pageWidth="297" pageHeight="842" columnWidth="257" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec923e48-d7e7-441c-a2c0-62e93330e972">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     articulo.`codigo` AS articulo_codigo,
+     articulo.`nombre` AS articulo_nombre
+FROM
+     `articulo` articulo
+ORDER BY articulo.id ASC]]>
+	</queryString>
+	<field name="articulo_codigo" class="java.lang.String"/>
+	<field name="articulo_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="45" y="15" width="176" height="34" uuid="bfe4d097-7a65-4271-9b29-27bd69df906a"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo de Barras]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="152" y="59" width="105" height="20" uuid="530ce002-66c9-48ae-96f0-ff2ff3cbdb44"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="101" splitType="Stretch">
+			<componentElement>
+				<reportElement x="30" y="29" width="200" height="31" uuid="6b2508bb-8d2e-4583-81ee-948b72f485a0"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{articulo_codigo}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="94" y="9" width="100" height="20" uuid="42e216f6-b239-45ec-8719-356790ecc6c7"/>
+				<textFieldExpression><![CDATA[$F{articulo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="60" width="100" height="20" uuid="726538ee-2c65-4929-9ccf-7a0fe4e213b4"/>
+				<textFieldExpression><![CDATA[$F{articulo_codigo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="45" y="24" width="80" height="20" uuid="c9b2fd87-b04b-4a91-b2e4-5ec52ee08b5a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="125" y="24" width="40" height="20" uuid="85147f98-c8aa-4fb9-b7c5-d6c0f758b2e4"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
